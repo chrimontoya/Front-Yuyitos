@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +18,18 @@ import { ProductsComponent } from './pages/products/products.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { ClientFormComponent } from './pages/clients/client-form/client-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import { ProductFormComponent } from './pages/products/product-form/product-form.component';
+import { ProductTableComponent } from './pages/products/product-table/product-table.component';
+import { ClientTableComponent } from './pages/clients/client-table/client-table.component';
+import { SupplierFormComponent } from './pages/suppliers/supplier-form/supplier-form.component';
+import { SupplierTableComponent } from './pages/suppliers/supplier-table/supplier-table.component';
+import { OrderFormComponent } from './pages/orders/order-form/order-form.component';
+import { OrderTableComponent } from './pages/orders/order-table/order-table.component';
+import { SaleFormComponent } from './pages/sales/sale-form/sale-form.component';
+import { ReportFormComponent } from './pages/reports/report-form/report-form.component';
+import { ReportTableComponent } from './pages/reports/report-table/report-table.component';
+import { SaleTableComponent } from './pages/sales/sale-table/sale-table.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +40,20 @@ import { ClientFormComponent } from './pages/clients/client-form/client-form.com
     ProductsComponent,
     OrdersComponent,
     ReportsComponent,
-    ClientFormComponent
+    ClientFormComponent,
+    ProductFormComponent,
+    ProductTableComponent,
+    ClientTableComponent,
+    SupplierFormComponent,
+    SupplierTableComponent,
+    OrderFormComponent,
+    OrderTableComponent,
+    SaleFormComponent,
+    SupplierFormComponent,
+    SupplierTableComponent,
+    ReportFormComponent,
+    ReportTableComponent,
+    SaleTableComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +66,8 @@ import { ClientFormComponent } from './pages/clients/client-form/client-form.com
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatDividerModule
+    MatDividerModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

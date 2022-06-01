@@ -1,0 +1,18 @@
+<form [formGroup]="supplierForm" class="containerForm">
+    <h3 class="title">Agregar proovedor</h3>
+    <div class="column">
+      <mat-form-field class="inputForm" appearance="legacy">
+        <mat-label>Nombres</mat-label>
+        <input formControlName="nombres" matInput />
+      </mat-form-field>
+      <mat-form-field class="inputForm" appearance="legacy">
+        <mat-label>Apellidos</mat-label>
+        <input formControlName="apellidos" matInput />
+      </mat-form-field>
+    </div>
+    <div class="containerActionBtns">
+      <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+      <button mat-raised-button color="primary" class="btnAdd">Agregar</button>
+    </div>
+  </form>
+  
