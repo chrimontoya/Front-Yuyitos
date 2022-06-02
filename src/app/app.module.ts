@@ -30,6 +30,7 @@ import { SaleFormComponent } from './pages/sales/sale-form/sale-form.component';
 import { ReportFormComponent } from './pages/reports/report-form/report-form.component';
 import { ReportTableComponent } from './pages/reports/report-table/report-table.component';
 import { SaleTableComponent } from './pages/sales/sale-table/sale-table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { SaleTableComponent } from './pages/sales/sale-table/sale-table.componen
     MatPaginatorModule,
     MatDialogModule,
     MatDividerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
