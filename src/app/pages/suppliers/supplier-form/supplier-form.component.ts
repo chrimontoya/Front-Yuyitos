@@ -11,12 +11,16 @@ export class SupplierFormComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.createForm();
   }
 
   createForm(){
     this.supplierForm=this.fb.group({
-      nombres: '',
-      apellidos: '',
+      rut: '',
+      dv: '',
+      name: '',
+      email: '',
+      phone: '',
     })
   }
 

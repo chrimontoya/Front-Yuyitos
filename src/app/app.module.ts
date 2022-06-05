@@ -11,6 +11,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SalesComponent } from './pages/sales/sales.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { SuppliersComponent } from './pages/suppliers/suppliers.component';
@@ -31,6 +33,7 @@ import { ReportFormComponent } from './pages/reports/report-form/report-form.com
 import { ReportTableComponent } from './pages/reports/report-table/report-table.component';
 import { SaleTableComponent } from './pages/sales/sale-table/sale-table.component';
 import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -69,7 +72,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatDialogModule,
     MatDividerModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

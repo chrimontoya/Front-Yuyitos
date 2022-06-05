@@ -2,38 +2,55 @@
 <mat-form-field class="inputSearch" appearance="legacy">
     <input matInput placeholder="Buscar">
     <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+</mat-form-field>
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <table mat-table [dataSource]="suppliers">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && isAllSelected()"
+          (change)="toggleAll()">
+
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+          <mat-checkbox (change)="onSupplierToggle(element)"
+          [checked]="selection.isSelected(element)">
+              
+          </mat-checkbox>
+        </td>
       </ng-container>
-  
-      <!-- Name Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="rut">
+        <th mat-header-cell *matHeaderCellDef> rut </th>
+        <td mat-cell *matCellDef="let element"> {{element.rut}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dv">
+        <th mat-header-cell *matHeaderCellDef> dv </th>
+        <td mat-cell *matCellDef="let element"> {{element.dv}} </td>
+      </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> nombre </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      <ng-container matColumnDef="item">
+        <th mat-header-cell *matHeaderCellDef> rubro </th>
+        <td mat-cell *matCellDef="let element"> {{element.item.name}} </td>
       </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> correo </th>
+        <td mat-cell *matCellDef="let element"> {{element.contact.email}} </td>
       </ng-container>
-  
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> telefono </th>
+        <td mat-cell *matCellDef="let element"> {{element.contact.phone}} </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                    showFirstLastButtons 
                    aria-label="Select page of periodic elements">
@@ -45,3 +62,4 @@
     <button mat-raised-button color="primary">Editar</button>
     <button mat-raised-button color="warn">Eliminar</button>
   </div>
+

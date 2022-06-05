@@ -4,5 +4,5 @@ export interface ProductModel {
   stock: Number,
   dateExpiration: String,
   image: String,
-  idCategory: Number
+  idCategory: Object
 }
