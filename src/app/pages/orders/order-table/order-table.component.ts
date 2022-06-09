@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
 import { SupplierModel } from 'src/app/models/supplier.interface';
+import { OrderFormComponent } from '../order-form/order-form.component';
 
 @Component({
   selector: 'app-order-table',
@@ -29,7 +30,7 @@ export class OrderTableComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   openForm() {
-    //this.dialog.open(SupplierFormComponent);
+    this.dialog.open(OrderFormComponent);
   }
   displayedColumns: string[] = [
     'id',

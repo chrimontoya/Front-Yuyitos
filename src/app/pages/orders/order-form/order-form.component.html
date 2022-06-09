@@ -1,18 +1,48 @@
 <form [formGroup]="orderForm" class="containerForm">
-    <h3 class="title">Agregar orden</h3>
+  <div class="row">
+    <div>
+      <h3>Producto</h3>
+
+      <div class="row">
+        
+        <mat-form-field appearance="fill">
+          <mat-label>--Seleccione--</mat-label>
+          <mat-select formControlName="product">
+            <mat-option
+              *ngFor="let product of products"
+              [value]="product.id"
+            >
+              {{ product.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="inputForm" appearance="legacy">
+          <mat-label>Cantidad</mat-label>
+          <input formControlName="stock" matInput />
+        </mat-form-field>
+        <mat-form-field class="inputForm" appearance="legacy">
+          <mat-label>Monto</mat-label>
+          <input formControlName="price" matInput />
+        </mat-form-field>
+      </div>
+    </div>
     <div class="column">
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Nombres</mat-label>
-        <input formControlName="nombres" matInput />
-      </mat-form-field>
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Apellidos</mat-label>
-        <input formControlName="apellidos" matInput />
+      <h3>Proveedor</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>--Seleccione--</mat-label>
+        <mat-select formControlName="idSupplier">
+          <mat-option
+            *ngFor="let supplier of suppliers"
+            [value]="supplier.id"
+          >
+            {{ supplier.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
-    <div class="containerActionBtns">
-      <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-      <button mat-raised-button color="primary" class="btnAdd">Agregar</button>
-    </div>
-  </form>
-  
+  </div>
+  <div class="containerActionBtns">
+    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button color="primary" class="btnAdd" (click)="saveOrder()">Agregar</button>
+  </div>
+</form>

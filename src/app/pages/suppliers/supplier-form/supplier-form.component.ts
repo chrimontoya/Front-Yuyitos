@@ -24,4 +24,8 @@ export class SupplierFormComponent implements OnInit {
     })
   }
 
+  saveSupplier(){
+    console.log(this.supplierForm.getRawValue());
+  }
+
 }

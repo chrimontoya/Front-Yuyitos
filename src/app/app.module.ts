@@ -13,6 +13,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTreeModule} from '@angular/material/tree';
 import { SalesComponent } from './pages/sales/sales.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { SuppliersComponent } from './pages/suppliers/suppliers.component';
@@ -33,6 +35,7 @@ import { ReportFormComponent } from './pages/reports/report-form/report-form.com
 import { ReportTableComponent } from './pages/reports/report-table/report-table.component';
 import { SaleTableComponent } from './pages/sales/sale-table/sale-table.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -74,7 +77,10 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatTreeModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

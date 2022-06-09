@@ -27,9 +27,10 @@ export class ProductFormComponent implements OnInit {
   }
 
   saveProduct(){
-    this.productSvc.post(this.productForm.getRawValue()).subscribe({
+    /*this.productSvc.post(this.productForm.getRawValue()).subscribe({
       next: (product:ProductModel)=>console.log(product)
-    })
+    })*/
+    console.log(this.productForm.getRawValue());
   }
 
 }
