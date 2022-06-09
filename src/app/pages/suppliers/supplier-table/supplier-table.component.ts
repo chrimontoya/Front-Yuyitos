@@ -18,7 +18,7 @@ export class SupplierTableComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.suppliers);
+
   }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -41,7 +41,7 @@ export class SupplierTableComponent implements OnInit {
     return this.selection.selected?.length == this.suppliers?.length;
   }
   toggleAll(){
-    //console.log(this.suppliers);
+    console.log(this.suppliers);
       if(this.isAllSelected()){
         this.selection.clear();
       }else{
