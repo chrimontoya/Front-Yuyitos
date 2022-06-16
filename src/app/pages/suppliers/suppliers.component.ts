@@ -17,7 +17,7 @@ export class SuppliersComponent implements OnInit {
 
   getAll() {
     this.supplierService.getAll().subscribe({
-      next: (suppliers:SupplierModel[]) => this.suppliers=suppliers
+      next: (suppliers:SupplierModel[]) => {this.suppliers=suppliers,console.log(suppliers)}
     });
   }
 }
