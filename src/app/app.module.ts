@@ -57,7 +57,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     OrderTableComponent,
     SaleFormComponent,
     SupplierFormComponent,
-    SupplierTableComponent,
     ReportFormComponent,
     ReportTableComponent,
     SaleTableComponent

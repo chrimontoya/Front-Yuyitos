@@ -20,8 +20,12 @@ export class SupplierService {
   }
 
 
-  add(supplier:SupplierModel):Observable<SupplierModel>{
-    return this.http.post<SupplierModel>(this.url,supplier);
+  add(supplier:SupplierModel):Observable<Number>{
+    return this.http.post<Number>(this.url,supplier);
+  }
+
+  delete(id:number):Observable<SupplierModel>{
+    return this.http.delete<SupplierModel>(this.url+"/"+id);
   }
 
 }
