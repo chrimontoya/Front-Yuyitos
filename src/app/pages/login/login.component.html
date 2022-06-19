@@ -1,0 +1,21 @@
+<div class="container">
+    <mat-card class="card">
+        <div class="container-image">
+            <img class="image" src="../../../assets/images/backgroundLogin.jpg"/>
+        </div>
+        <form [formGroup]="formLogin" class="container-login">
+            <mat-card class="card-login">
+                <h3>Inicia sesión en el Almacén</h3>
+                <mat-form-field  appearance="legacy">
+                    <mat-label>Ingresa tu usuario</mat-label>
+                    <input formControlName="username" matInput />
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Ingresa tu contraseña</mat-label>
+                    <input type="password" formControlName="password" matInput />
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="signIn()">Primary</button>
+            </mat-card>
+        </form>
+    </mat-card>
+</div>

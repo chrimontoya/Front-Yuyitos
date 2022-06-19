@@ -36,6 +36,8 @@ import { ReportTableComponent } from './pages/reports/report-table/report-table.
 import { SaleTableComponent } from './pages/sales/sale-table/sale-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     SupplierFormComponent,
     ReportFormComponent,
     ReportTableComponent,
-    SaleTableComponent
+    SaleTableComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
