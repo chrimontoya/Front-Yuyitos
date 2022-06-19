@@ -1,3 +1,4 @@
+import { ContactModel } from "./contact.interfaces";
 import { ItemModel } from "./item.interfaces";
 
 export interface SupplierModel {
@@ -6,5 +7,5 @@ export interface SupplierModel {
     dv: string,
     name: string,
     item: ItemModel,
-    contact: Object,
+    contact: ContactModel,
 }

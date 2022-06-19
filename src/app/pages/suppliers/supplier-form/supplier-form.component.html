@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field class="inputForm" appearance="legacy">
         <mat-label>Rubro</mat-label>
-        <mat-select formControlName="test" (selectionChange)="getSelectedItem($event)">
+        <mat-select formControlName="item" (selectionChange)="getSelectedItem($event)">
           <mat-option *ngFor="let item of items" [value]="item.id">
             {{item.name}}
           </mat-option>

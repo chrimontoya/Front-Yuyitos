@@ -55,16 +55,19 @@ export class SupplierTableComponent implements OnInit,OnDestroy {
   }
 
   delete() {
-  /* this.supplierService.delete(this.selection.selected[0].id).subscribe({
-      next: () => {
+      for (const supplier in this.selection.selected) {
+        this.supplierService.delete(this.selection.selected[supplier].id).subscribe({
+          next: () => {
+            console.log("eliminado");
+          }
+        })
       }
-    })*/
-    for (const id in this.selection.selected) {
-      this.supplierService.delete(parseInt(id)).subscribe({
-        next: () => {
-        }
-      })
-    }
+  }
+
+  update(){
+      const supplier = this.selection.selected[this.selection.selected.length-1];
+
+      if(supplier)this.dialog.open(SupplierFormComponent,{data:supplier});
   }
 
 }

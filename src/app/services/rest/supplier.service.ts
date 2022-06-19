@@ -19,7 +19,6 @@ export class SupplierService {
     return this.http.get<SupplierModel>(this.url+"/"+id);
   }
 
-
   add(supplier:SupplierModel):Observable<Number>{
     return this.http.post<Number>(this.url,supplier);
   }
