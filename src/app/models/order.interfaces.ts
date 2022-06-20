@@ -1,6 +1,8 @@
+import { SupplierModel } from "./supplier.interface";
+
 export interface OrderModel {
     id: number,
-    date:Date,
+    dateCreate:Date,
     status: boolean,
-    id_supplier:number,
+    supplier:SupplierModel,
 }

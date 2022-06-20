@@ -1,9 +1,11 @@
+import { OrderModel } from "./order.interfaces";
+import { ProductModel } from "./product.interfaces";
+
 export interface OrderDetailsModel {
     id:number,
-    nameProduct:string,
     stock:number,
     price:number,
-    dateExpiration: Date,
-    order:number,
-    product:number,
+    dateExpirate: Date,
+    order:OrderModel,
+    product:ProductModel,
 }

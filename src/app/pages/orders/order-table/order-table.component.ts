@@ -1,29 +1,34 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrderModel } from 'src/app/models/order.interfaces';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
-import { SupplierModel } from 'src/app/models/supplier.interface';
+import { ProductModel } from 'src/app/models/product.interfaces';
+import { OrderService } from 'src/app/services/rest/order.service';
 import { OrderFormComponent } from '../order-form/order-form.component';
 
 @Component({
   selector: 'app-order-table',
   templateUrl: './order-table.component.html',
-  styleUrls: ['./order-table.component.css'],
+  styleUrls: ['./order-table.component.css']
 })
-export class OrderTableComponent implements OnInit {
-  selection = new SelectionModel<OrderDetailsModel>(true);
+export class OrderTableComponent implements OnInit, OnDestroy {
+  @Input() orders!: OrderModel[];
   @Input() orderDetails!: OrderDetailsModel[];
-  constructor(private dialog: MatDialog) {}
+  selection = new SelectionModel<OrderModel>(true);
+  constructor(private dialog: MatDialog,private orderService:OrderService) { }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    //throw new Error('Method not implemented.');
+  }
+
+
+  ngOnInit(): void {
+    console.log(this.orders);
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -32,31 +37,39 @@ export class OrderTableComponent implements OnInit {
   openForm() {
     this.dialog.open(OrderFormComponent);
   }
-  displayedColumns: string[] = [
-    'id',
-    'order',
-    'product',
-    'nameProduct',
-    'stock',
-    'price',
-    'dateExpiration',
-  ];
-  dataSource = new MatTableDataSource<OrderDetailsModel>(this.orderDetails);
+  displayedColumns: string[] = ['select', 'orden', 'id','product', 'stock', 'price','supplier','dateExpirate','dateCreate','status'];
+  dataSource = new MatTableDataSource<OrderModel>(this.orders);
 
-  onSupplierToggle(orderDetails: OrderDetailsModel) {
-    this.selection.toggle(orderDetails);
-    console.log(this.selection.selected);
+  onProductToggle(order: OrderModel) {
+    this.selection.toggle(order);
   }
 
   isAllSelected() {
-    return this.selection.selected?.length == this.orderDetails?.length;
+
+    return this.selection.selected?.length == this.orders?.length;
   }
   toggleAll() {
-    console.log(this.orderDetails);
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.selection.select(...this.orderDetails);
+      this.selection.select(...this.orders);
     }
   }
+  delete() {
+    for (const order in this.selection.selected) {
+      // this.orderService.delete(this.selection.selected[supplier].id).subscribe({
+      //   next: () => {
+      //     console.log("eliminado");
+      //   }
+      // })
+    }
+  }
+
+  update() {
+    const product = this.selection.selected[this.selection.selected.length - 1];
+
+    if (product) this.dialog.open(OrderFormComponent, { data: product });
+  }
+
+
 }
