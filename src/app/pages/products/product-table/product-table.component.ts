@@ -1,8 +1,10 @@
-import { AfterViewInit,Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductModel } from 'src/app/models/product.interfaces';
+import { ProductService } from 'src/app/services/rest/product.service';
 import { ProductFormComponent } from '../product-form/product-form.component';
 
 @Component({
@@ -10,12 +12,19 @@ import { ProductFormComponent } from '../product-form/product-form.component';
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.css']
 })
-export class ProductTableComponent implements OnInit {
-  @Input() products!:ProductModel[];
-  constructor(private dialog: MatDialog) { }
+export class ProductTableComponent implements OnInit, OnDestroy {
+  @Input() products!: ProductModel[];
+  selection = new SelectionModel<ProductModel>(true);
+  constructor(private dialog: MatDialog, private productService: ProductService) { }
+
+  ngOnDestroy(): void {
+    //throw new Error('Method not implemented.');
+  }
+
 
   ngOnInit(): void {
   }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -24,7 +33,39 @@ export class ProductTableComponent implements OnInit {
   openForm() {
     this.dialog.open(ProductFormComponent);
   }
-  displayedColumns: string[] = ['idProduct','name','stock','dateExpiration','image','idCategory'];
+  displayedColumns: string[] = ['select', 'idProduct', 'name', 'stock', 'dateExpiration', 'image', 'sección'];
   dataSource = new MatTableDataSource<ProductModel>(this.products);
-  
+
+  onProductToggle(product: ProductModel) {
+    this.selection.toggle(product);
+  }
+
+  isAllSelected() {
+
+    return this.selection.selected?.length == this.products?.length;
+  }
+  toggleAll() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selection.select(...this.products);
+    }
+  }
+  delete() {
+    for (const supplier in this.selection.selected) {
+      this.productService.delete(this.selection.selected[supplier].id).subscribe({
+        next: () => {
+          console.log("eliminado");
+        }
+      })
+    }
+  }
+
+  update() {
+    const product = this.selection.selected[this.selection.selected.length - 1];
+
+    if (product) this.dialog.open(ProductFormComponent, { data: product });
+  }
+
+
 }

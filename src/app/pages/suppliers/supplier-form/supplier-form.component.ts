@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA,MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { ContactModel } from 'src/app/models/contact.interfaces';
 import { ItemModel } from 'src/app/models/item.interfaces';
@@ -19,11 +19,11 @@ export class SupplierFormComponent implements OnInit {
   items!: ItemModel[];
   selectedItem!: MatSelectChange;
   supplierId!: number;
-  constructor(private fb: FormBuilder, 
-    private itemService: ItemService, 
-    private supplierService: SupplierService, 
+  constructor(private fb: FormBuilder,
+    private itemService: ItemService,
+    private supplierService: SupplierService,
     private contactService: ContactService,
-    @Inject(MAT_DIALOG_DATA) public supplier:SupplierModel) { }
+    @Inject(MAT_DIALOG_DATA) public supplier: SupplierModel) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -31,23 +31,23 @@ export class SupplierFormComponent implements OnInit {
   }
 
   createForm() {
-    if(this.supplier){
+
+    if (this.supplier) {
       this.supplierForm = this.fb.group({
-        id: this.supplier.id?this.supplier.id:'',
-        rut: this.supplier.rut?this.supplier.rut:'',
-        dv: this.supplier.dv?this.supplier.dv:'',
-        name: this.supplier.name?this.supplier.name:'',
-        email: this.supplier.contact.email?this.supplier.contact.email:'',
-        phone: this.supplier.contact.phone?this.supplier.contact.phone:'',
-        item: this.supplier.item.name?this.supplier.item.id:''
+        rut: this.supplier.rut,
+        dv: this.supplier.dv,
+        name: this.supplier.name,
+        item: this.supplier.item.id,
+        email: this.supplier.contact.email,
+        phone: this.supplier.contact.phone,
       })
-    }else{
+    } else {
       this.supplierForm = this.fb.group({
-        rut:'',
-        dv: '',
+        rut: ['',Validators.maxLength(9),Validators.minLength(8)],
+        dv: ['',Validators.maxLength(1)],
         name: '',
-        email: '',
-        phone: '',
+        email: ['',Validators.email],
+        phone: ['',Validators.maxLength(9)],
         item: ''
       })
     }
@@ -58,34 +58,34 @@ export class SupplierFormComponent implements OnInit {
   }
 
   saveSupplier() {
-    //console.log(this.supplierForm.get('item')?.value);
 
     const supplier = {
-
+      id: this.supplier ? this.supplier.id : null,
       rut: this.supplierForm.get('rut')?.value,
       dv: this.supplierForm.get('dv')?.value,
       name: this.supplierForm.get('name')?.value,
       item: {
-        id: this.selectedItem.value
-      },
-
+        id: this.supplier ? this.supplier.item.id : this.supplierForm.get('item')?.value
+      }
     } as SupplierModel;
 
     this.supplierService.add(supplier).subscribe({
       next: (supplier) => {
         const contact = {
+          id: this.supplier ? this.supplier.contact.id : null,
           email: this.supplierForm.get('email')?.value,
           phone: this.supplierForm.get('phone')?.value,
-          supplier: supplier
+          supplier: this.supplier ? this.supplier.id : supplier
         } as ContactModel;
+    
         this.contactService.add(contact).subscribe({
-          next: () => { console.log("insert contact"); }
-        });
+          next: () => {
+          }
+        })
       }
-    })
+    });
 
-
-
+    
   }
 
   getAllItem() {

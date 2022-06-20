@@ -20,6 +20,13 @@ export class SupplierService {
   }
 
   add(supplier:SupplierModel):Observable<Number>{
+    
+    const {id,rut,dv,name,item,contact }= supplier;
+
+    const json = {
+      id,rut,dv,name,item,contact:null
+    }
+
     return this.http.post<Number>(this.url,supplier);
   }
 

@@ -1,15 +1,15 @@
 <form [formGroup]="productForm" class="containerForm">
-  <h3 class="title">Agregar producto</h3>
+  <h3 class="title">{{product? 'Modificar producto':'Agregar producto'}}</h3>
   <div class="column">
     <mat-form-field class="inputForm" appearance="legacy">
       <mat-label>Nombre producto</mat-label>
       <input formControlName="name" matInput />
     </mat-form-field>
-    <mat-form-field class="inputForm" appearance="legacy">
+    <mat-form-field disabled class="inputForm" appearance="legacy">
       <mat-label>Cantidad</mat-label>
       <input formControlName="stock" matInput />
     </mat-form-field>
-    <mat-form-field class="inputForm" appearance="legacy">
+    <mat-form-field disabled class="inputForm" appearance="legacy">
       <mat-label>Fecha expiracion</mat-label>
       <input formControlName="dateExpiration" matInput />
     </mat-form-field>
@@ -19,7 +19,11 @@
     </mat-form-field>
     <mat-form-field class="inputForm" appearance="legacy">
       <mat-label>Categoria</mat-label>
-      <input formControlName="idCategory" matInput />
+      <mat-select formControlName="categoryType" (selectionChange)="getSelectedSection($event)">
+        <mat-option *ngFor="let cTypes of categoryTypes" [value]="cTypes.id">
+          {{cTypes.name}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div class="containerActionBtns">

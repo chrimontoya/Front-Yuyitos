@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ContactModel } from 'src/app/models/contact.interfaces';
 
 @Injectable({
@@ -12,6 +13,14 @@ export class ContactService {
   add(contact:ContactModel){
     console.log(contact);
     return this.httpClient.post(this.url+"contact",contact);
+  }
+
+  getAll():Observable<ContactModel[]>{
+    return this.httpClient.get<ContactModel[]>(this.url+'contact');
+  }
+
+  findById(id:number):Observable<ContactModel>{
+    return this.httpClient.get<ContactModel>(this.url+'contact/'+id);
   }
 
 }

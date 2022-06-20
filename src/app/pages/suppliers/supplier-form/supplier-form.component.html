@@ -1,5 +1,5 @@
 <form [formGroup]="supplierForm" class="containerForm">
-    <h3 class="title">Agregar proovedor</h3>
+    <h3 class="title">{{supplier?"Modificar proovedor":"Agregar proovedor"}}</h3>
     <div class="column">
       <mat-form-field class="inputForm" appearance="legacy">
         <mat-label>Rut</mat-label>

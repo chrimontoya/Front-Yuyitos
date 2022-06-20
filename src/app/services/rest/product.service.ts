@@ -19,18 +19,8 @@ export class ProductService {
     return this.http.get<ProductModel>(this.url);
   }
 
-  post(product: ProductModel): Observable<ProductModel> {
-    const { id, name, stock, dateExpiration, image, idCategory } = product;
-    const json = {
-      id,
-      name,
-      stock,
-      dateExpiration,
-      image,
-      idCategory: {id:1},
-    };
-
-    return this.http.post<ProductModel>(this.url, json);
+  add(product: ProductModel): Observable<ProductModel> {
+    return this.http.post<ProductModel>(this.url, product);
   }
 
   delete(id: Number): Observable<ProductModel> {

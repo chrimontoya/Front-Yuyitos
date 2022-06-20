@@ -7,5 +7,5 @@ export interface SupplierModel {
     dv: string,
     name: string,
     item: ItemModel,
-    contact: ContactModel,
+    contact:ContactModel
 }

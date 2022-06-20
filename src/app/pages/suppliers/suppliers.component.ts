@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactModel } from 'src/app/models/contact.interfaces';
 import { SupplierModel } from 'src/app/models/supplier.interface';
+import { ContactService } from 'src/app/services/rest/contact.service';
 import { SupplierService } from 'src/app/services/rest/supplier.service';
 
 @Component({
@@ -9,15 +11,27 @@ import { SupplierService } from 'src/app/services/rest/supplier.service';
 })
 export class SuppliersComponent implements OnInit {
   suppliers!: SupplierModel[];
-  constructor(private supplierService: SupplierService) {}
+  contacts!: ContactModel[];
+  constructor(private supplierService: SupplierService,private contactService:ContactService) {}
 
   ngOnInit(): void {
-    this.getAll();
+    this.getAllSuppliers();
+    this.getAllContacts();
   }
 
-  getAll() {
+  getAllSuppliers() {
     this.supplierService.getAll().subscribe({
-      next: (suppliers:SupplierModel[]) => {this.suppliers=suppliers,console.log(suppliers)}
+      next: (suppliers:SupplierModel[]) => {
+        this.suppliers=suppliers; 
+      }
     });
+  }
+
+  getAllContacts(){
+    this.contactService.getAll().subscribe({
+      next: (contacts:ContactModel[])=>{
+        this.contacts=contacts;
+      }
+    })
   }
 }

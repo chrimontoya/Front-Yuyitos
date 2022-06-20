@@ -1,8 +1,10 @@
+import { CategoryTypeModel } from "./category-type-interfaces";
+
 export interface ProductModel {
   id: number,
   name: string,
   stock: number,
-  dateExpiration: string,
+  dateExpiration: Date,
   image: string,
-  idCategory: object
+  categoryType: CategoryTypeModel
 }

@@ -17,7 +17,7 @@ export class ProductsComponent implements OnInit {
 
   getAll(){
     this.productSvc.getAll().subscribe({
-      next: (products:ProductModel[])=>this.products=products,
+      next: (products:ProductModel[])=>{this.products=products },
     });
   }
 
