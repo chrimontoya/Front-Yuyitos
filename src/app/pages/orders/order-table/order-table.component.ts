@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrderModel } from 'src/app/models/order.interfaces';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
+import { OrderDetailsService } from 'src/app/services/rest/order-details.service';
 import { OrderService } from 'src/app/services/rest/order.service';
 import { OrderFormComponent } from '../order-form/order-form.component';
 
@@ -17,8 +18,9 @@ import { OrderFormComponent } from '../order-form/order-form.component';
 export class OrderTableComponent implements OnInit, OnDestroy {
   @Input() orders!: OrderModel[];
   @Input() orderDetails!: OrderDetailsModel[];
-  selection = new SelectionModel<OrderModel>(true);
-  constructor(private dialog: MatDialog,private orderService:OrderService) { }
+  selection = new SelectionModel<OrderDetailsModel>(true);
+  constructor(private dialog: MatDialog,
+    private orderDetailsService:OrderDetailsService) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -26,7 +28,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log(this.orders);
+    console.log(this.orderDetails[0]);
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,37 +40,37 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     this.dialog.open(OrderFormComponent);
   }
   displayedColumns: string[] = ['select', 'orden', 'id','product', 'stock', 'price','supplier','dateExpirate','dateCreate','status'];
-  dataSource = new MatTableDataSource<OrderModel>(this.orders);
+  dataSource = new MatTableDataSource<OrderDetailsModel>(this.orderDetails);
 
-  onProductToggle(order: OrderModel) {
-    this.selection.toggle(order);
+  onProductToggle(orderDetails: OrderDetailsModel) {
+    this.selection.toggle(orderDetails);
   }
 
   isAllSelected() {
 
-    return this.selection.selected?.length == this.orders?.length;
+    return this.selection.selected?.length == this.orderDetails?.length;
   }
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.selection.select(...this.orders);
+      this.selection.select(...this.orderDetails);
     }
   }
   delete() {
+    //HAY QUE BORRAR LAS ORDENES SI NO HAY DETALLES
     for (const order in this.selection.selected) {
-      // this.orderService.delete(this.selection.selected[supplier].id).subscribe({
-      //   next: () => {
-      //     console.log("eliminado");
-      //   }
-      // })
+      this.orderDetailsService.delete(this.selection.selected[order].id).subscribe({
+        next:()=>{
+          console.log("eliminado");
+        }
+      })
     }
   }
 
   update() {
-    const product = this.selection.selected[this.selection.selected.length - 1];
-
-    if (product) this.dialog.open(OrderFormComponent, { data: product });
+    const details = this.selection.selected[this.selection.selected.length - 1];
+    if (details) this.dialog.open(OrderFormComponent, { data: details });
   }
 
 

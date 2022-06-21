@@ -15,6 +15,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTreeModule} from '@angular/material/tree';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import { SalesComponent } from './pages/sales/sales.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { SuppliersComponent } from './pages/suppliers/suppliers.component';
@@ -83,7 +84,8 @@ import { HomeComponent } from './pages/home/home.component';
     MatCheckboxModule,
     MatSelectModule,
     MatTreeModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,6 +17,15 @@ export class OrderService {
   }
 
   getById(id:number):Observable<OrderModel>{
-    return this.http.get<OrderModel>(this.url);
+    return this.http.get<OrderModel>(this.url+"/"+id);
   }
+
+  add(order:OrderModel):Observable<number>{
+    return this.http.post<number>(this.url,order);
+  }
+
+  delete(id:number):Observable<OrderModel>{
+    return this.http.delete<OrderModel>(this.url+"/"+id);
+  }
+
 }

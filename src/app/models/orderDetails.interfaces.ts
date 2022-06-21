@@ -5,7 +5,7 @@ export interface OrderDetailsModel {
     id:number,
     stock:number,
     price:number,
-    dateExpirate: Date,
+    dateExpiration: Date,
     order:OrderModel,
     product:ProductModel,
 }

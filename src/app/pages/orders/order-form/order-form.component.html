@@ -1,13 +1,23 @@
-<form [formGroup]="orderForm" class="containerForm">
-  <div class="row">
-    <div>
-      <h3>Producto</h3>
-
-      <div class="row">
-        
-        <mat-form-field appearance="fill">
-          <mat-label>--Seleccione--</mat-label>
-          <mat-select formControlName="product">
+<form [formGroup]="form" class="formOrden" style="max-height: 700px;">
+  <div formArrayName="product">
+    <h2 style="margin: 10px">Nueva Orden</h2>
+    <div class="header">
+      <label style="margin: 10px">Agregar producto</label>
+      <button mat-icon-button color="primary" (click)="addProduct()">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </div>
+    <div
+      *ngFor="let productGroup of product?.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="row containerInputs">
+        <button mat-icon-button  color="primary" class="iconCenter" (click)="deleteProduct()">
+          <mat-icon>minimize</mat-icon>
+        </button>
+        <mat-form-field class="inputForm" appearance="legacy">
+          <mat-label>--Producto--</mat-label>
+          <mat-select formControlName="name" (selectionChange)="getSelectedProduct($event)">
             <mat-option
               *ngFor="let product of products"
               [value]="product.id"
@@ -16,21 +26,21 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="inputForm" appearance="legacy">
+        <mat-form-field class="inputForm" style="width: 70px;" appearance="legacy">
           <mat-label>Cantidad</mat-label>
-          <input formControlName="stock" matInput />
+          <input formControlName="stock" matInput/>
         </mat-form-field>
-        <mat-form-field class="inputForm" appearance="legacy">
-          <mat-label>Monto</mat-label>
-          <input formControlName="price" matInput />
+        <mat-form-field class="inputForm" style="width: 70px;" appearance="legacy">
+          <mat-label>Precio</mat-label>
+          <input formControlName="price" matInput/>
         </mat-form-field>
       </div>
     </div>
-    <div class="column">
-      <h3>Proveedor</h3>
-      <mat-form-field appearance="fill">
-        <mat-label>--Seleccione--</mat-label>
-        <mat-select formControlName="idSupplier">
+    <form [formGroup]="selectForm">
+      <h2 style="margin: 10px">Proveedor</h2>
+      <mat-form-field class="inputForm" appearance="legacy">
+        <mat-label>--Proveedor--</mat-label>
+        <mat-select formControlName="supplier" (selectionChange)="getSelectedItem($event)">
           <mat-option
             *ngFor="let supplier of suppliers"
             [value]="supplier.id"
@@ -39,10 +49,26 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div class="containerIcons">
+        <div class="rowIcon"*ngIf="supplierDetails">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
+          <div >{{supplierDetails.name}}</div>
+        </div>
+        <div class="rowIcon" *ngFor="let contact of contactBySupplier">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">email</mat-icon>
+          <div *ngIf="contact" >{{contact.email}}</div>
+        </div>
+        <div class="rowIcon" *ngFor="let contact of contactBySupplier">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">phone</mat-icon>
+          <div *ngIf="contact" >{{contact.phone}}</div>
+        </div>
+      </div>
+      <div class="containerActionBtns">
+      <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+      <button mat-raised-button color="primary" class="btnAdd" (click)="saveOrder()">Agregar</button>
     </div>
-  </div>
-  <div class="containerActionBtns">
-    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-    <button mat-raised-button color="primary" class="btnAdd" (click)="saveOrder()">Agregar</button>
+    </form>
+    
   </div>
 </form>
+

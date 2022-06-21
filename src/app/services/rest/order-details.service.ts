@@ -20,4 +20,12 @@ export class OrderDetailsService {
     return this.http.get<OrderDetailsModel>(this.url);
   }
 
+  add(orderDetails:OrderDetailsModel):Observable<OrderDetailsModel>{
+    return this.http.post<OrderDetailsModel>(this.url,orderDetails);
+  }
+
+  delete(id:number):Observable<OrderDetailsModel>{
+    return this.http.delete<OrderDetailsModel>(this.url+"/"+id);
+  }
+
 }
