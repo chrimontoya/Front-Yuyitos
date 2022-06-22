@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+  }
+
+.inputSearch{
+  float: right;
+  margin: 10px;
+}
+
+.btnAdd{margin: 20px;
+  background-color: #198754;
+}

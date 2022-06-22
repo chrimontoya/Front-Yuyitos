@@ -2,46 +2,64 @@
 <mat-form-field class="inputSearch" appearance="legacy">
     <input matInput placeholder="Buscar">
     <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+</mat-form-field>
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <table mat-table [dataSource]="clients">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && isAllSelected()"
+          (change)="toggleAll()">
+
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+          <mat-checkbox (change)="onClientToggle(element)"
+          [checked]="selection.isSelected(element)">
+              
+          </mat-checkbox>
+        </td>
       </ng-container>
-  
-      <!-- Name Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="rut">
+        <th mat-header-cell *matHeaderCellDef> rut </th>
+        <td mat-cell *matCellDef="let element"> {{element.rut}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dv">
+        <th mat-header-cell *matHeaderCellDef> dv </th>
+        <td mat-cell *matCellDef="let element"> {{element.dv}} </td>
+      </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> nombres </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> apellido paterno </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
       </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <ng-container matColumnDef="lastNameMother">
+        <th mat-header-cell *matHeaderCellDef> apellido materno </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastNameMother}} </td>
       </ng-container>
-  
+      <ng-container matColumnDef="fiado">
+        <th mat-header-cell *matHeaderCellDef> fiado </th>
+        <td mat-cell *matCellDef="let element"> {{element.fiado}} </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                    showFirstLastButtons 
                    aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
   
-  <button (click)="openForm()" mat-raised-button color="primary" class="btnAdd">Agregar</button>
+  <button (click)="openForm()" mat-raised-button disabled color="primary" class="btnAdd">Agregar</button>
   <div class="containerActionBtns">
-    <button mat-raised-button color="primary">Editar</button>
-    <button mat-raised-button color="warn">Eliminar</button>
+    <button mat-raised-button color="primary" >Editar</button>
+    <button mat-raised-button color="warn" >Eliminar</button>
   </div>
+

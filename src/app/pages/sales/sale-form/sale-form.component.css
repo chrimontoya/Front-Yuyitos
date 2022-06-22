@@ -1,0 +1,10 @@
+.containerCustomer{
+    display: flex;
+    flex-direction: column;
+    max-height: 700px;
+}
+
+.containerInputs{    
+    align-content: center;
+    align-items: center;
+}

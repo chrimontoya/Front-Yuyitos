@@ -33,6 +33,7 @@ export class ProductFormComponent implements OnInit {
         id: this.product.id,
         name: this.product.name,
         stock: this.product.stock,
+        price: this.product.price,
         dateExpiration: this.product.dateExpiration,
         image: this.product.image,
         categoryType: this.product.categoryType.id
@@ -41,6 +42,7 @@ export class ProductFormComponent implements OnInit {
       this.productForm = this.fb.group({
         name: '',
         stock: [{ value: '0', disabled: true }],
+        price: '',
         dateExpiration: [{ value: getCurrentDate(), disabled: true }],
         image: '',
         categoryType: ''
@@ -64,13 +66,14 @@ export class ProductFormComponent implements OnInit {
         id: this.product?this.product.id:null,
         name: this.productForm.get('name')?.value,
         stock: this.productForm.get('stock')?.value,
+        price: this.productForm.get('price')?.value,
         dateExpiration: new Date(),
         image: this.productForm.get('image')?.value,
         categoryType: {
-          id: this.product?this.product.categoryType.id:this.productForm.get('categoryType')?.value
+          id: this.selectedItem.value
         },
       } as ProductModel;
-
+      console.log(this.productForm.get('categoryType')?.value);
       console.log(product);
       this.productService.add(product).subscribe({
         next: () => {

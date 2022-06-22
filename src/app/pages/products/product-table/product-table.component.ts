@@ -33,7 +33,7 @@ export class ProductTableComponent implements OnInit, OnDestroy {
   openForm() {
     this.dialog.open(ProductFormComponent);
   }
-  displayedColumns: string[] = ['select', 'idProduct', 'name', 'stock', 'dateExpiration', 'image', 'sección'];
+  displayedColumns: string[] = ['select', 'idProduct', 'name', 'stock','price', 'dateExpiration', 'image', 'sección'];
   dataSource = new MatTableDataSource<ProductModel>(this.products);
 
   onProductToggle(product: ProductModel) {
@@ -63,7 +63,6 @@ export class ProductTableComponent implements OnInit, OnDestroy {
 
   update() {
     const product = this.selection.selected[this.selection.selected.length - 1];
-
     if (product) this.dialog.open(ProductFormComponent, { data: product });
   }
 

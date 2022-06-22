@@ -1,18 +1,68 @@
-<form [formGroup]="saleForm" class="containerForm">
-    <h3 class="title">Agregar producto</h3>
-    <div class="column">
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Nombres</mat-label>
-        <input formControlName="nombres" matInput />
+<form [formGroup]="saleForm" class="containerCustomer">
+  <h2 style="margin: 10px">Generar venta</h2>
+  <label style="margin: 10px">Cliente</label>
+  <div style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;">
+    <mat-form-field class="inputForm" appearance="legacy">
+      <mat-label>Rut</mat-label>
+      <input formControlName="rut" maxlength="9" matInput />
+    </mat-form-field>
+    <h2>-</h2>
+    <mat-form-field class="inputForm" style="width: 70px;" appearance="legacy">
+      <mat-label>Digito</mat-label>
+      <input formControlName="dv" maxlength="1" matInput />
+    </mat-form-field>
+  </div>
+  <mat-form-field class="inputForm"  appearance="legacy">
+    <mat-label>Nombres</mat-label>
+    <input formControlName="name" maxlength="45" matInput />
+  </mat-form-field>
+  <mat-form-field class="inputForm" appearance="legacy">
+    <mat-label>Apellido paterno</mat-label>
+    <input formControlName="lastName" maxlength="45" matInput />
+  </mat-form-field>
+  <mat-form-field class="inputForm" appearance="legacy">
+    <mat-label>Apellido materno</mat-label>
+    <input formControlName="lastNameMother" maxlength="45" matInput />
+  </mat-form-field>
+  <mat-form-field class="inputForm" appearance="legacy" style="width: 70px;">
+        <mat-label>Fiado</mat-label>
+        <mat-select formControlName="fiado" (selectionChange)="getSelectedItem($event)">
+          <mat-option *ngFor="let fiado of fiados" [value]="fiado.id">
+            {{fiado.status==0?'No':'Si'}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Apellidos</mat-label>
-        <input formControlName="apellidos" matInput />
-      </mat-form-field>
+  <form [formGroup]="form" class="formProducts">
+    <div formArrayName="product">
+      <div class="header">
+        <label style="margin: 10px">Agregar producto</label>
+        <button mat-icon-button color="primary" (click)="addProduct()">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+      </div>
+      <div *ngFor="let productGroup of product?.controls; let i = index" [formGroupName]="i" >
+        <div class="row containerInputs">
+          <button mat-icon-button color="primary" class="iconCenter" (click)="deleteProduct()">
+            <mat-icon>minimize</mat-icon>
+          </button>
+          <mat-form-field class="inputForm" appearance="legacy">
+            <mat-label>--Producto--</mat-label>
+            <mat-select formControlName="id" (selectionChange)="getSelectedProduct($event)">
+              <mat-option *ngFor="let product of products" [value]="product.id">
+                {{ product.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="inputForm" style="width: 70px;" appearance="legacy">
+            <mat-label>Cantidad</mat-label>
+            <input formControlName="stock" matInput />
+          </mat-form-field>
+        </div>
+      </div>
     </div>
-    <div class="containerActionBtns">
-      <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-      <button mat-raised-button color="primary" class="btnAdd">Agregar</button>
-    </div>
+  <div class="containerActionBtns">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" class="btnAdd" (click)="saveSale()">Generar venta</button>
+  </div>
   </form>
-  
+</form>
