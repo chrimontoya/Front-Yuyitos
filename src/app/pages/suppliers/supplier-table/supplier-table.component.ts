@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { DialogMessageFailureComponent } from 'src/app/components/dialogs/dialog-message-failure/dialog-message-failure.component';
+import { DialogMessageSuccessComponent } from 'src/app/components/dialogs/dialog-message-success/dialog-message-success.component';
 import { ContactModel } from 'src/app/models/contact.interfaces';
 import { SupplierModel } from 'src/app/models/supplier.interface';
 import { SupplierService } from 'src/app/services/rest/supplier.service';
@@ -72,19 +74,27 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  showMessageSuccess(){
+    this.dialog.open(DialogMessageSuccessComponent,{position: {top: '0%'}});
+  }
+
+  showMessageFailure(){
+    this.dialog.open(DialogMessageFailureComponent,{position: {top: '0%'}});
+  }
+
   delete() {
     for (const supplier in this.selection.selected) {
       this.supplierService.delete(this.selection.selected[supplier].id).subscribe({
         next: () => {
-          console.log("eliminado");
-        }
+        },
+        error: ()=>this.showMessageFailure(),
       })
-    }
+    };
+    this.showMessageSuccess();
   }
 
   update() {
     const supplier = this.selection.selected[this.selection.selected.length - 1];
-
     if (supplier) this.dialog.open(SupplierFormComponent, { data: supplier });
   }
 

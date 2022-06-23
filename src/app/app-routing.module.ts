@@ -9,6 +9,7 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { SalesComponent } from './pages/sales/sales.component';
 import { SuppliersComponent } from './pages/suppliers/suppliers.component';
 
+
 const routes: Routes = [{
   path: 'inicio',
   component: HomeComponent,

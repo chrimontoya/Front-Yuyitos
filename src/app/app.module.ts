@@ -39,6 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { DialogMessageSuccessComponent } from './components/dialogs/dialog-message-success/dialog-message-success.component';
+import { DialogMessageFailureComponent } from './components/dialogs/dialog-message-failure/dialog-message-failure.component';
 
 
 @NgModule({
@@ -59,12 +61,13 @@ import { HomeComponent } from './pages/home/home.component';
     OrderFormComponent,
     OrderTableComponent,
     SaleFormComponent,
-    SupplierFormComponent,
     ReportFormComponent,
     ReportTableComponent,
     SaleTableComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    DialogMessageSuccessComponent,
+    DialogMessageFailureComponent
   ],
   imports: [
     BrowserModule,

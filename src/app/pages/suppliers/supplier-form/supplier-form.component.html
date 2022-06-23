@@ -1,14 +1,16 @@
 <form [formGroup]="supplierForm" class="containerForm">
     <h3 class="title">{{supplier?"Modificar proovedor":"Agregar proovedor"}}</h3>
     <div class="column">
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Rut</mat-label>
-        <input formControlName="rut" matInput />
-      </mat-form-field>
-      <mat-form-field class="inputForm" appearance="legacy">
-        <mat-label>Dv</mat-label>
-        <input formControlName="dv" matInput />
-      </mat-form-field>
+      <div style="display: flex; flex-direction: row;">
+        <mat-form-field class="inputForm" appearance="legacy">
+          <mat-label>Rut</mat-label>
+          <input formControlName="rut" matInput />
+        </mat-form-field>
+        <mat-form-field class="inputForm" style="width: 70px;" appearance="legacy">
+          <mat-label>Dv</mat-label>
+          <input formControlName="dv" matInput />
+        </mat-form-field>
+      </div>
       <mat-form-field class="inputForm" appearance="legacy">
         <mat-label>Nombre</mat-label>
         <input formControlName="name" matInput />
@@ -32,7 +34,7 @@
     </div>
     <div class="containerActionBtns">
       <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-      <button mat-raised-button color="primary" class="btnAdd" (click)="saveSupplier()">Agregar</button>
+      <button mat-raised-button mat-dialog-close color="primary" class="btnAdd" (click)="saveSupplier()">Agregar</button>
     </div>
   </form>
   
