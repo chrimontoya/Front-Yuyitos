@@ -44,6 +44,7 @@ export class SaleFormComponent implements OnInit {
         })
       ])
     });
+    console.log(this.saleAndDetail);
   }
 
   getAllProducts() {
@@ -54,12 +55,12 @@ export class SaleFormComponent implements OnInit {
 
   createForm() {
     this.saleForm = this.fb.group({
-      rut: this.saleAndDetail?this.saleAndDetail.rut:'',
-      dv: this.saleAndDetail?this.saleAndDetail.dv:'',
-      name: this.saleAndDetail?this.saleAndDetail.name:'',
-      lastName: this.saleAndDetail?this.saleAndDetail.lastName:'',
-      lastNameMother: this.saleAndDetail?this.saleAndDetail.lastNameMother:'',
-      fiado: this.saleAndDetail?this.saleAndDetail.fiado:'',
+      rut: this.saleAndDetail ? this.saleAndDetail.rut : '',
+      dv: this.saleAndDetail ? this.saleAndDetail.dv : '',
+      name: this.saleAndDetail ? this.saleAndDetail.name : '',
+      lastName: this.saleAndDetail ? this.saleAndDetail.lastName : '',
+      lastNameMother: this.saleAndDetail ? this.saleAndDetail.lastNameMother : '',
+      fiado: this.saleAndDetail ? this.saleAndDetail.fiado : '',
     })
   }
 
@@ -90,54 +91,46 @@ export class SaleFormComponent implements OnInit {
 
 
   saveSale() {
+
     const client = {
-      id: this.saleAndDetail?this.saleAndDetail.idClient:null,
+      id: this.saleAndDetail ? this.saleAndDetail.idClient : null,
       rut: this.saleForm.get('rut')?.value,
       dv: this.saleForm.get('dv')?.value,
       name: this.saleForm.get('name')?.value,
       lastName: this.saleForm.get('lastName')?.value,
       lastNameMother: this.saleForm.get('lastNameMother')?.value,
-      fiado: this.saleAndDetail?this.saleAndDetail.fiado:this.selectedItem.value
+      fiado: this.saleAndDetail ? this.saleAndDetail.fiado : this.selectedItem.value
     } as ClientModel;
-    console.log(client);
 
     this.clientService.add(client).subscribe({
       next: (idClient) => {
         const sale = {
-          id: this.saleAndDetail?this.saleAndDetail.idSale:null,
+          id: this.saleAndDetail ? this.saleAndDetail.idSale : null,
           dateCreation: new Date(),
           client: {
-            id: this.saleAndDetail?this.saleAndDetail.idClient:idClient
+            id: this.saleAndDetail ? this.saleAndDetail.idClient : idClient
           }
         } as SaleModel;
-        console.log(sale);
+
         this.saleService.add(sale).subscribe({
-          next: (idSale)=>{
-
+          next: (idSale) => {
             for (const key in this.product.value) {
+              const currentProduct = this.products.find((currentProd) => currentProd.id == this.product.value[key].id);
+              const saleDetails = {
+                id: this.saleAndDetail ? this.saleAndDetail.idSaleDetail : null,
+                stock: this.product.value[key].stock,
+                sale: this.saleAndDetail ? this.saleAndDetail.idSale : idSale,
+                product: currentProduct?.id ? currentProduct.id : this.saleAndDetail.idProduct
+              } as SaleDetailsModel;
 
-            const currentProduct = this.products.find((currentProd)=>currentProd.id==this.product.value[key].id);
-
-            const saleDetails = {
-              id: this.saleAndDetail?this.saleAndDetail.idSaleDetail:null,
-              price: currentProduct?.price,
-              stock: this.product.value[key].stock,
-              sale:this.saleAndDetail?this.saleAndDetail.idSale:idSale,
-              product: this.saleAndDetail?this.saleAndDetail.idProduct:currentProduct?.id
-            } as SaleDetailsModel;
-              console.log(saleDetails);
               this.saleDetailsService.add(saleDetails).subscribe({
-
-                next:()=>{console.log("ok");}
+                next: () => { console.log("ok"); }
               })
             }
-        
           }
-        });
+        })
       }
     })
-
-    
   }
 
 }
