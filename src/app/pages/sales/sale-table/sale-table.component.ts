@@ -1,8 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExportData } from 'src/app/models/export-data.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
 import { SaleAndDetailsModel } from 'src/app/models/sale-and-details.interfaces';
 import { SaleModel } from 'src/app/models/sale.interfaces';
@@ -21,16 +23,22 @@ export class SaleTableComponent implements OnInit {
   @Input() saleAndDetails!: SaleAndDetailsModel[];
 
   selection = new SelectionModel<SaleAndDetailsModel>(true);
+  formExport!:FormGroup;
+  exports: ExportData[]=[
+    {id:1,value: 'Excel' },
+    {id:2,value: 'PDF' }
+  ]
   constructor(private dialog: MatDialog,
     private saleService: SaleService,
-    private saleDetailsService:SaleDetailsService) { }
+    private saleDetailsService:SaleDetailsService,
+    private fb:FormBuilder) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
-
+    this.createFormCombobox();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,6 +51,13 @@ export class SaleTableComponent implements OnInit {
   }
   displayedColumns: string[] = ['select', 'id', 'idDetail', 'client', 'product', 'stock', 'price', 'dateCreation', 'fiado'];
   dataSource = new MatTableDataSource<SaleAndDetailsModel>(this.saleAndDetails);
+  
+  createFormCombobox(){
+    this.formExport = this.fb.group({
+      filter: '',
+      toExport: '',
+    });
+  }
 
   isAllSelected() {
     return this.selection.selected?.length == this.saleAndDetails?.length;

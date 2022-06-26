@@ -1,8 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExportData } from 'src/app/models/export-data.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
 import { ProductService } from 'src/app/services/rest/product.service';
 import { ProductFormComponent } from '../product-form/product-form.component';
@@ -15,7 +17,15 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 export class ProductTableComponent implements OnInit, OnDestroy {
   @Input() products!: ProductModel[];
   selection = new SelectionModel<ProductModel>(true);
-  constructor(private dialog: MatDialog, private productService: ProductService) { }
+  formExport!:FormGroup;
+  exports: ExportData[]=[
+    {id:1,value: 'Excel' },
+    {id:2,value: 'PDF' }
+  ]
+
+  constructor(private dialog: MatDialog, 
+    private productService: ProductService,
+    private fb:FormBuilder) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -23,9 +33,17 @@ export class ProductTableComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.createFormCombobox();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  createFormCombobox(){
+    this.formExport = this.fb.group({
+      filter: '',
+      toExport: '',
+    });
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

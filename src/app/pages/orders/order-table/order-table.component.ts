@@ -1,8 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExportData } from 'src/app/models/export-data.interfaces';
 import { OrderModel } from 'src/app/models/order.interfaces';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
@@ -19,8 +21,14 @@ export class OrderTableComponent implements OnInit, OnDestroy {
   @Input() orders!: OrderModel[];
   @Input() orderDetails!: OrderDetailsModel[];
   selection = new SelectionModel<OrderDetailsModel>(true);
+  formExport!:FormGroup;
+  exports: ExportData[]=[
+    {id:1,value: 'Excel' },
+    {id:2,value: 'PDF' }
+  ]
   constructor(private dialog: MatDialog,
-    private orderDetailsService:OrderDetailsService) { }
+    private orderDetailsService:OrderDetailsService,
+    private fb:FormBuilder) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -28,7 +36,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log(this.orderDetails[0]);
+    this.createFormCombobox();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -41,6 +49,14 @@ export class OrderTableComponent implements OnInit, OnDestroy {
   }
   displayedColumns: string[] = ['select', 'orden', 'id','product', 'stock', 'price','supplier','dateExpirate','dateCreate','status'];
   dataSource = new MatTableDataSource<OrderDetailsModel>(this.orderDetails);
+
+
+  createFormCombobox(){
+    this.formExport = this.fb.group({
+      filter: '',
+      toExport: '',
+    });
+  }
 
   onProductToggle(orderDetails: OrderDetailsModel) {
     this.selection.toggle(orderDetails);

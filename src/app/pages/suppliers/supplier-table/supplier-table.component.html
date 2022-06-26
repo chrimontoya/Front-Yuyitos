@@ -1,8 +1,31 @@
 <h2 class="title">Proveedores</h2>
-<mat-form-field class="inputSearch" appearance="legacy">
+<form [formGroup]="formExport">
+<div style="float: left;">
+  <mat-form-field class="inputSearch" appearance="legacy">
     <input matInput placeholder="Buscar">
     <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar por</mat-label>
+    <mat-select formControlName="filter">
+      <mat-option *ngFor="let export of exports" [value]="export.id">
+        {{export.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div style="float: right;">
+  <mat-form-field appearance="outline">
+    <mat-label>Exportar a</mat-label>
+    <mat-select formControlName="toExport">
+      <mat-option *ngFor="let export of exports" [value]="export.id">
+        {{export.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button (click)="openForm()" mat-raised-button color="primary" class="btnAdd">Agregar</button>
+</div>
+</form>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="suppliers">
       <ng-container matColumnDef="select">
@@ -57,7 +80,7 @@
     </mat-paginator>
   </div>
   
-  <button (click)="openForm()" mat-raised-button color="primary" class="btnAdd">Agregar</button>
+
   <div class="containerActionBtns">
     <button mat-raised-button color="primary" (click)="update()">Editar</button>
     <button mat-raised-button color="warn" (click)="delete()">Eliminar</button>
