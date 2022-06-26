@@ -15,6 +15,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatListModule} from '@angular/material/list';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { SalesComponent } from './pages/sales/sales.component';
 import { ClientsComponent } from './pages/clients/clients.component';
@@ -41,6 +42,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DialogMessageSuccessComponent } from './components/dialogs/dialog-message-success/dialog-message-success.component';
 import { DialogMessageFailureComponent } from './components/dialogs/dialog-message-failure/dialog-message-failure.component';
+import { ReceiveProductComponent } from './pages/products/receive-product/receive-product.component';
 
 
 @NgModule({
@@ -67,7 +69,8 @@ import { DialogMessageFailureComponent } from './components/dialogs/dialog-messa
     LoginComponent,
     HomeComponent,
     DialogMessageSuccessComponent,
-    DialogMessageFailureComponent
+    DialogMessageFailureComponent,
+    ReceiveProductComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +91,8 @@ import { DialogMessageFailureComponent } from './components/dialogs/dialog-messa
     MatSelectModule,
     MatTreeModule,
     MatFormFieldModule,
-    ScrollingModule
+    ScrollingModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

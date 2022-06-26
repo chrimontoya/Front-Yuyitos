@@ -9,6 +9,7 @@ import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
 export class OrderDetailsService {
   refresh = new EventEmitter();
   private url = "http://localhost:8080/orderDetails";
+  private suffix = "/find-by-id-order";
   constructor(private http:HttpClient) { }
 
 
@@ -17,7 +18,7 @@ export class OrderDetailsService {
   }
 
   getById(id:number):Observable<OrderDetailsModel>{
-    return this.http.get<OrderDetailsModel>(this.url);
+    return this.http.get<OrderDetailsModel>(this.url+"/"+id);
   }
 
   add(orderDetails:OrderDetailsModel):Observable<OrderDetailsModel>{
@@ -26,6 +27,10 @@ export class OrderDetailsService {
 
   delete(id:number):Observable<OrderDetailsModel>{
     return this.http.delete<OrderDetailsModel>(this.url+"/"+id);
+  }
+
+  findByIdOrder(id:number):Observable<OrderDetailsModel[]>{
+    return this.http.get<OrderDetailsModel[]>(this.url+this.suffix+"/"+id);
   }
 
 }

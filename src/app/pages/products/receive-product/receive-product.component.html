@@ -1,0 +1,9 @@
+<h2>Seleciona la orden a recepcionar</h2>
+<mat-list role="list" *ngFor="let order of orders">
+    <mat-list-item >
+        <button mat-raised-button (click)="openModal(order.id)">
+            Orden: {{order.id}} Fecha: {{order.dateCreate | date: 'dd-MM-yyyy'}}
+    </button></mat-list-item>
+</mat-list>
+
+<button style="margin: 20px;" mat-raised-button mat-dialog-close color="warn">Cancelar</button>

@@ -5,9 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExportData } from 'src/app/models/export-data.interfaces';
+import { OrderModel } from 'src/app/models/order.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
+import { OrderService } from 'src/app/services/rest/order.service';
 import { ProductService } from 'src/app/services/rest/product.service';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { ReceiveProductComponent } from '../receive-product/receive-product.component';
 
 @Component({
   selector: 'app-product-table',
@@ -18,6 +21,7 @@ export class ProductTableComponent implements OnInit, OnDestroy {
   @Input() products!: ProductModel[];
   selection = new SelectionModel<ProductModel>(true);
   formExport!:FormGroup;
+  orders!:OrderModel[];
   exports: ExportData[]=[
     {id:1,value: 'Excel' },
     {id:2,value: 'PDF' }
@@ -25,7 +29,8 @@ export class ProductTableComponent implements OnInit, OnDestroy {
 
   constructor(private dialog: MatDialog, 
     private productService: ProductService,
-    private fb:FormBuilder) { }
+    private fb:FormBuilder,
+    private orderService:OrderService) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -34,6 +39,7 @@ export class ProductTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormCombobox();
+    this.getAllOrders();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,11 +51,17 @@ export class ProductTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  getAllOrders(){
+    this.orderService.getAllByStatusZero().subscribe({
+      next:(orders)=>this.orders=orders
+    });
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
   openForm() {
-    this.dialog.open(ProductFormComponent);
+    if(this.orders)this.dialog.open(ReceiveProductComponent,{data: this.orders});
   }
   displayedColumns: string[] = ['select', 'idProduct', 'name', 'stock','price', 'dateExpiration', 'image', 'sección'];
   dataSource = new MatTableDataSource<ProductModel>(this.products);

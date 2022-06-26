@@ -9,6 +9,7 @@ import { OrderModel } from 'src/app/models/order.interfaces';
 export class OrderService {
   refresh = new EventEmitter();
   private url = "http://localhost:8080/orders";
+  private suffix = "orders-by-status-zero";
   constructor(private http:HttpClient) { }
 
 
@@ -27,5 +28,10 @@ export class OrderService {
   delete(id:number):Observable<OrderModel>{
     return this.http.delete<OrderModel>(this.url+"/"+id);
   }
+
+  getAllByStatusZero():Observable<OrderModel[]>{
+    return this.http.get<OrderModel[]>(this.url+"/"+this.suffix);
+  }
+
 
 }
