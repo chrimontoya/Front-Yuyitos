@@ -1,0 +1,25 @@
+.containerProductForm{
+    display: table;
+    flex-direction: row;
+    
+}  
+.containerSelection{
+    margin: 20px;
+    border-bottom: 1px solid black;
+}
+.buttonIconProduct{
+    display: table-cell;
+    vertical-align: middle;
+}
+.containerProductSelected{
+    margin: 20px;
+}
+.itemProduct{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.btnAdd{
+    background-color: #198754;
+}

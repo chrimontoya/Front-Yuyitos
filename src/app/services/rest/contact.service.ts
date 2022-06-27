@@ -8,6 +8,7 @@ import { ContactModel } from 'src/app/models/contact.interfaces';
 })
 export class ContactService {
   private url = "http://localhost:8080/";
+  private suffix = "find-by-id-supplier";
   constructor(private httpClient:HttpClient) { }
 
   add(contact:ContactModel){
@@ -21,6 +22,10 @@ export class ContactService {
 
   findById(id:number):Observable<ContactModel>{
     return this.httpClient.get<ContactModel>(this.url+'contact/'+id);
+  }
+
+  findByIdSupplier(id:number):Observable<ContactModel[]>{
+    return this.httpClient.get<ContactModel[]>(this.url+"contact/"+this.suffix+"/"+id);
   }
 
 }

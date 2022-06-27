@@ -17,14 +17,13 @@ export class ReceiveProductComponent implements OnInit {
   private orderDetailsService:OrderDetailsService) { }
 
   ngOnInit(): void {
-  
   }
 
   openModal(id:number){
 
     this.orderDetailsService.findByIdOrder(id).subscribe({
       next:(details)=>{
-        this.dialog.open(ProductFormComponent,{data: details});
+        if(details)this.dialog.open(ProductFormComponent,{data: [this.orders[0],details]});
       }
     });
 

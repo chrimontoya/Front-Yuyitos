@@ -1,6 +1,40 @@
 
-  
+  <div class="containerProductForm">
+    <div>
+        <h2 style="margin-left: 20px;">Orden #{{this.orderDetails[0]?this.orderDetails[0].id:"No encontrada"}}</h2>
+        <mat-selection-list #details class="containerSelection">
+          <mat-list-option  checkboxPosition="before" *ngFor="let details of this.orderDetails" (selectedChange)="test($event,details)">
+            {{details.product.name}}  x{{details.product.stock}}  ${{details.product.price | currency: 'CLP'}}
+          </mat-list-option>
+        </mat-selection-list>
+        <p  style="margin-left: 20px;">
+          Productos seleccionados: {{details.selectedOptions.selected.length}}
+        </p>
+        <mat-list>
+          <mat-list-item><mat-icon aria-hidden="false" >account_circle</mat-icon>{{this.order.supplier.name}}</mat-list-item>
+          <mat-list-item *ngFor="let c of contacts"><mat-icon aria-hidden="false" >email</mat-icon>{{c.email}}</mat-list-item>
+          <mat-list-item *ngFor="let c of contacts"><mat-icon aria-hidden="false" >phone</mat-icon>{{c.phone}}</mat-list-item>
+        </mat-list>
+    </div>
+    <div class="buttonIconProduct">
+      <button mat-mini-fab disabled aria-label="Example icon button with a home icon" (click)="sendProducts()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <div class="containerProductSelected">
+      <h2  style="margin-left: 20px;">Nuevos productos</h2>
+      <mat-list *ngIf="this.productArr" #products>
+        <mat-list-item *ngFor="let product of this.productArr" class="itemProduct">
+          {{product.name}} x{{product.stock}} ${{product.price | currency: 'CLP'}}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
   <div class="containerActionBtns">
-    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-    <button mat-raised-button color="primary"  class="btnAdd">Agregar</button>
+    <button mat-mini-fab mat-dialog-close aria-label="Example icon button with a home icon" color="warn">
+      <mat-icon>close</mat-icon>
+    </button>
+    <button *ngIf="this.orderDetails[0]" mat-mini-fab mat-dialog-close aria-label="Example icon button with a home icon" class="btnAdd"  (click)="sendProducts()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
   </div>
