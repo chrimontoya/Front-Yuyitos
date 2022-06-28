@@ -23,6 +23,7 @@ export class ReceiveProductComponent implements OnInit {
 
     this.orderDetailsService.findByIdOrder(id).subscribe({
       next:(details)=>{
+        console.log(details);
         if(details)this.dialog.open(ProductFormComponent,{data: [this.orders[0],details]});
       }
     });

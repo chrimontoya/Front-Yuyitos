@@ -85,7 +85,6 @@ export class ProductTableComponent implements OnInit, OnDestroy {
   exportData(){
     const details = this.selection.selected;
     if (details.length > 0) {
-      console.log(details);
     }
   }
 

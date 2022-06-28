@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { DialogMessageFailureComponent } from 'src/app/components/dialogs/dialog-message-failure/dialog-message-failure.component';
+import { DialogMessageSuccessComponent } from 'src/app/components/dialogs/dialog-message-success/dialog-message-success.component';
 import { CategoryTypeModel } from 'src/app/models/category-type-interfaces';
 import { ContactModel } from 'src/app/models/contact.interfaces';
 import { OrderModel } from 'src/app/models/order.interfaces';
@@ -25,7 +27,6 @@ export class ProductFormComponent implements OnInit {
   order!:OrderModel;
   orderDetails!:OrderDetailsModel[];
   contacts!:ContactModel[];
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   productArr:any[]=[];
   productStatus!:boolean;
   constructor(private fb: FormBuilder,
@@ -33,6 +34,7 @@ export class ProductFormComponent implements OnInit {
     private categoryTypeService: CategoryTypeService,
     private contactService:ContactService,
     private orderService:OrderService,
+    private dialog:MatDialog,
     @Inject(MAT_DIALOG_DATA) public data:any[]) { }
 
   ngOnInit(): void {
@@ -102,20 +104,24 @@ export class ProductFormComponent implements OnInit {
               supplier: this.order.supplier
             } as OrderModel;
             this.orderService.add(order).subscribe({next:()=>{
-              console.log("orden actualizada");
-            }})
-          }})
+              this.dialog.open(DialogMessageSuccessComponent)
+            },
+          error:()=>this.dialog.open(DialogMessageFailureComponent)})
+          },
+        error:()=>this.dialog.open(DialogMessageFailureComponent)})
         }
       }})
     }
   }
 
   test(event:any,details:any){
+   
     if(event==true){
-      this.productArr.push(details.product);
+      this.productArr.push({id:details.product.id,name:details.product.name,stock:details.stock,price:details.product.price});
     }else{
       this.productArr=this.productArr.filter((product)=>product.id!==details.product.id);
     }
+    console.log(this.productArr);
   }
 
 

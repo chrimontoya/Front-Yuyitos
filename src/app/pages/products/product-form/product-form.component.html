@@ -4,7 +4,7 @@
         <h2 style="margin-left: 20px;">Orden #{{this.orderDetails[0]?this.orderDetails[0].id:"No encontrada"}}</h2>
         <mat-selection-list #details class="containerSelection">
           <mat-list-option  checkboxPosition="before" *ngFor="let details of this.orderDetails" (selectedChange)="test($event,details)">
-            {{details.product.name}}  x{{details.product.stock}}  ${{details.product.price | currency: 'CLP'}}
+            {{details.product.name}}  x{{details.stock}}  ${{details.product.price | currency: 'CLP'}}
           </mat-list-option>
         </mat-selection-list>
         <p  style="margin-left: 20px;">
