@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderModel } from 'src/app/models/order.interfaces';
+import { OrderDetailsQueryModel } from 'src/app/models/orderDetails-query.interfaces';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
 import { OrderDetailsService } from 'src/app/services/rest/order-details.service';
 import { OrderService } from 'src/app/services/rest/order.service';
@@ -12,6 +13,7 @@ import { OrderService } from 'src/app/services/rest/order.service';
 export class OrdersComponent implements OnInit {
   orders!:OrderModel[];
   orderDetails!:OrderDetailsModel[];
+  orderDetailsQuery:any[]=[];
   constructor(private orderService:OrderService,private orderDetailsService:OrderDetailsService) { }
 
   ngOnInit(): void {
@@ -23,6 +25,11 @@ export class OrdersComponent implements OnInit {
     this.orderService.getAll().subscribe({
       next:(orders)=>{
         this.orders=orders;
+        for (const i in orders){
+          this.orderDetailsService.getAllByIdOrderQuery(orders[i].id).subscribe({
+            next:(res)=>this.orderDetailsQuery.push(res)
+          });  
+        }
       }
     })
   }
@@ -32,5 +39,4 @@ export class OrdersComponent implements OnInit {
        next:(orderDetails)=>{this.orderDetails=orderDetails;},
      })
   }
-
 }

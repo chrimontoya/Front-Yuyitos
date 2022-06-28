@@ -11,6 +11,8 @@ import { ProductModel } from 'src/app/models/product.interfaces';
 import { OrderDetailsService } from 'src/app/services/rest/order-details.service';
 import { OrderService } from 'src/app/services/rest/order.service';
 import { OrderFormComponent } from '../order-form/order-form.component';
+import jsPDF from "jspdf";
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-order-table',
@@ -20,15 +22,16 @@ import { OrderFormComponent } from '../order-form/order-form.component';
 export class OrderTableComponent implements OnInit, OnDestroy {
   @Input() orders!: OrderModel[];
   @Input() orderDetails!: OrderDetailsModel[];
+  @Input() orderDetailsQuery!:OrderDetailsModel[];
   selection = new SelectionModel<OrderDetailsModel>(true);
-  formExport!:FormGroup;
-  exports: ExportData[]=[
-    {id:1,value: 'Excel' },
-    {id:2,value: 'PDF' }
+  formExport!: FormGroup;
+  exports: ExportData[] = [
+    { id: 1, value: 'Excel' },
+    { id: 2, value: 'PDF' }
   ]
   constructor(private dialog: MatDialog,
-    private orderDetailsService:OrderDetailsService,
-    private fb:FormBuilder) { }
+    private orderDetailsService: OrderDetailsService,
+    private fb: FormBuilder) { }
 
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -37,6 +40,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormCombobox();
+    console.log(this.orderDetailsQuery);
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,11 +51,11 @@ export class OrderTableComponent implements OnInit, OnDestroy {
   openForm() {
     this.dialog.open(OrderFormComponent);
   }
-  displayedColumns: string[] = ['select', 'orden', 'id','product', 'stock', 'price','supplier','dateExpirate','dateCreate','status'];
+  displayedColumns: string[] = ['select', 'orden', 'id', 'product', 'stock', 'price', 'supplier', 'dateExpirate', 'dateCreate', 'status'];
   dataSource = new MatTableDataSource<OrderDetailsModel>(this.orderDetails);
 
 
-  createFormCombobox(){
+  createFormCombobox() {
     this.formExport = this.fb.group({
       filter: '',
       toExport: '',
@@ -73,11 +77,71 @@ export class OrderTableComponent implements OnInit, OnDestroy {
       this.selection.select(...this.orderDetails);
     }
   }
+
+  exportData() {
+    const details = this.selection.selected;
+    if (details.length > 0) {
+      const doc = new jsPDF();
+
+      const idOrder: any[] = [];
+      details.map((detail) => {
+        const res = idOrder.find((id) => id == detail.order.id);
+        res ? null : idOrder.push(detail.order.id.toString());
+      });
+
+      
+      
+      const data:any[]= []
+      for (const i in idOrder) {
+        
+        const current:any[]=[];
+        const res = details.filter((order)=>{if(order.order.id==idOrder[i]){
+          const {id,product,stock,price,dateExpiration} = order;
+          current.push([id,product.name,stock,price,dateExpiration]);
+        }});
+        
+        data.push(current);
+       // console.log(res);
+
+      }
+
+      const test:any[] = [];
+      for (const i in idOrder){
+        const head = [['ID detalle','producto','cantidad','precio','dateExpiration']]
+
+         //const arr:any[] =[[['xd','xd','xd','xd']],[['xd','xd','xd','xd']]];
+         const arr:any[] =[];
+        //console.log(Object.values(data[i]));
+        //console.log(arr);
+        //  autoTable(doc, {
+        //      head: head,
+        //      body:[data[i]],
+        //      didDrawCell: (data) => { },
+        //  });
+
+        for (const j in data[i]) {
+            arr.push(Object.values(data[i][j]));
+        }
+          autoTable(doc, {
+              head: head,
+              body:arr,
+              didDrawCell: (data) => { },
+          });
+      }
+      
+
+
+      doc.save("ordenes_generadas.pdf");
+      
+
+    }
+  }
+
   delete() {
     //HAY QUE BORRAR LAS ORDENES SI NO HAY DETALLES
     for (const order in this.selection.selected) {
       this.orderDetailsService.delete(this.selection.selected[order].id).subscribe({
-        next:()=>{
+        next: () => {
           console.log("eliminado");
         }
       })
