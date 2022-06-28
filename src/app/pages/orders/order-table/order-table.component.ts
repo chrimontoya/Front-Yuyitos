@@ -29,6 +29,12 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     { id: 1, value: 'Excel' },
     { id: 2, value: 'PDF' }
   ]
+  filters: any[] = [
+    { id: 1, value: 'ID orden' },
+    { id: 2, value: 'Proveedor' },
+    { id: 3, value: 'Producto' }
+  ]
+  filter:number=0;
   constructor(private dialog: MatDialog,
     private orderDetailsService: OrderDetailsService,
     private fb: FormBuilder) { }
@@ -40,7 +46,6 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormCombobox();
-    console.log(this.orderDetailsQuery);
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -59,11 +64,28 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     this.formExport = this.fb.group({
       filter: '',
       toExport: '',
+      search:'',
     });
   }
 
   onProductToggle(orderDetails: OrderDetailsModel) {
     this.selection.toggle(orderDetails);
+  }
+
+  filterSelected(event:any){
+    this.filter=event.value;
+  }
+
+  search(){
+
+    if(this.formExport.get('filter')?.value=='1'){
+        console.log(this.orderDetails.filter((value)=>value.id==19));
+        
+    }else if(this.formExport.get('filter')?.value=='2'){
+
+    }else if(this.formExport.get('filter')?.value=='3'){
+
+    }
   }
 
   isAllSelected() {
@@ -102,7 +124,6 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
       }
 
-      const test:any[] = [];
       for (const i in idOrder){
         const head = [['ID detalle','producto','cantidad','precio','dateExpiration','Orden: #'+idOrder[i]]]
 

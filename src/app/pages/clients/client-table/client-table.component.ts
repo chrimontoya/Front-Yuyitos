@@ -24,7 +24,6 @@ export class ClientTableComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.clients[0]);
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

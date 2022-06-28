@@ -2,14 +2,14 @@
 <form [formGroup]="formExport">
   <div style="float: left;">
     <mat-form-field class="inputSearch" appearance="legacy">
-      <input matInput placeholder="Buscar">
+      <input matInput placeholder="Buscar" formControlName="search" (keyup.enter)="search()">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Filtrar por</mat-label>
-      <mat-select formControlName="filter">
-        <mat-option *ngFor="let export of exports" [value]="export.id">
-          {{export.value}}
+      <mat-select formControlName="filter" (selectionChange)="filterSelected($event)">
+        <mat-option *ngFor="let filter of filters" [value]="filter.id">
+          {{filter.value}}
         </mat-option>
       </mat-select>
     </mat-form-field>

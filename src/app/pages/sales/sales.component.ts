@@ -29,7 +29,7 @@ export class SalesComponent implements OnInit {
   getAllSaleAndDetails(){
     this.saleService.getAllSaleAndDetails().subscribe({
       next:(saleAndDetails:SaleAndDetailsModel[])=>{
-        this.saleAndDetails=saleAndDetails; console.log(saleAndDetails);
+        this.saleAndDetails=saleAndDetails;
     }});
   }
 

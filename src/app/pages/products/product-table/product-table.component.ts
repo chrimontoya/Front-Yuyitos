@@ -81,6 +81,14 @@ export class ProductTableComponent implements OnInit, OnDestroy {
       this.selection.select(...this.products);
     }
   }
+
+  exportData(){
+    const details = this.selection.selected;
+    if (details.length > 0) {
+      console.log(details);
+    }
+  }
+
   delete() {
     for (const supplier in this.selection.selected) {
       this.productService.delete(this.selection.selected[supplier].id).subscribe({

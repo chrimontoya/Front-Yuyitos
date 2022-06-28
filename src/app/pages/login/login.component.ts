@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/rest/login.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { LoginService } from 'src/app/services/rest/login.service';
 })
 export class LoginComponent implements OnInit {
   formLogin!:FormGroup
-  constructor(private fb:FormBuilder,private loginService:LoginService) { }
+  @Input() status!:Boolean;
+  constructor(private fb:FormBuilder,private loginService:LoginService,private router:Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   signIn(){
-    
+   
 
     const json = {
       "username": this.formLogin.get('username')?.value,      
@@ -33,7 +35,9 @@ export class LoginComponent implements OnInit {
     
     this.loginService.logIn(json).subscribe({
       next:(user)=>{
-        console.log(user);
+        if(user){
+          this.router.navigateByUrl("/almacen/ventas");
+        }
       }
     })
   }

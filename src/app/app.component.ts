@@ -9,8 +9,6 @@ export class AppComponent {
   constructor(){
      
   }
-  number=0;
-  changepPage(number: number){
-      this.number=number;
-  } 
+  
+
 }

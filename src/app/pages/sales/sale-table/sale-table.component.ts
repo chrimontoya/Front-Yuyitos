@@ -12,7 +12,8 @@ import { SaleDetailsModel } from 'src/app/models/saleDetails.interfaces';
 import { SaleDetailsService } from 'src/app/services/rest/sale-details.service';
 import { SaleService } from 'src/app/services/rest/sale.service';
 import { SaleFormComponent } from '../sale-form/sale-form.component';
-
+import jsPDF from "jspdf";
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-sale-table',
   templateUrl: './sale-table.component.html',
@@ -73,6 +74,58 @@ export class SaleTableComponent implements OnInit {
     } else {
       this.selection.select(...this.saleAndDetails);
     }
+  }
+
+  exportData(){
+    const details = this.selection.selected;
+    if (details.length > 0) {
+      const doc = new jsPDF();
+
+      const idSale: any[] = [];
+      details.map((sale) => {
+        const res = idSale.find((id) => id == sale.idSale);
+        res ? null : idSale.push(sale.idSale.toString());
+      });
+
+      const data:any[]= []
+      for (const i in idSale) {
+
+        const current:any[]=[];
+        const res = details.filter((sale)=>{
+          if(sale.idSale==idSale[i]){
+            const {idSaleDetail,name,lastName,lastNameMother,nameProduct,stock,price,dateCreation,fiado}= sale;
+            current.push([idSaleDetail,name+" "+lastName+" "+lastNameMother,nameProduct,stock,price,dateCreation,fiado==1?"No":"Si"])
+          }
+        });
+        data.push(current);
+
+      }
+
+      for (const i in idSale){
+        const head = [['ID detalle','cliente','producto','cantidad','precio','dateCreation','fiado','Venta: #'+idSale[i]]]
+
+        const arr:any[] =[];
+
+        for (const j in data[i]) {
+            arr.push(Object.values(data[i][j]));
+        }
+        
+          autoTable(doc, {
+              head: head,
+              body:arr,
+              didDrawCell: (data) => { 
+                
+              },              
+          });
+      }
+
+      
+
+      doc.save("ventas_generadas.pdf");
+   
+    }
+
+
   }
 
    delete() {

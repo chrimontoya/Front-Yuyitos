@@ -15,14 +15,7 @@
     </mat-form-field>
   </div>
   <div style="float: right;">
-    <mat-form-field appearance="outline">
-      <mat-label>Exportar a</mat-label>
-      <mat-select formControlName="toExport">
-        <mat-option *ngFor="let export of exports" [value]="export.id">
-          {{export.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <button (click)="exportData()" mat-raised-button color="primary">Exportar</button>
     <button (click)="openForm()" mat-raised-button color="primary" class="btnAdd">Agregar</button>
   </div>
   </form>

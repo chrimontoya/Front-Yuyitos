@@ -43,6 +43,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { DialogMessageSuccessComponent } from './components/dialogs/dialog-message-success/dialog-message-success.component';
 import { DialogMessageFailureComponent } from './components/dialogs/dialog-message-failure/dialog-message-failure.component';
 import { ReceiveProductComponent } from './pages/products/receive-product/receive-product.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { ReceiveProductComponent } from './pages/products/receive-product/receiv
     HomeComponent,
     DialogMessageSuccessComponent,
     DialogMessageFailureComponent,
-    ReceiveProductComponent
+    ReceiveProductComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
