@@ -89,8 +89,6 @@ export class OrderTableComponent implements OnInit, OnDestroy {
         res ? null : idOrder.push(detail.order.id.toString());
       });
 
-      
-      
       const data:any[]= []
       for (const i in idOrder) {
         
@@ -101,39 +99,32 @@ export class OrderTableComponent implements OnInit, OnDestroy {
         }});
         
         data.push(current);
-       // console.log(res);
 
       }
 
       const test:any[] = [];
       for (const i in idOrder){
-        const head = [['ID detalle','producto','cantidad','precio','dateExpiration']]
+        const head = [['ID detalle','producto','cantidad','precio','dateExpiration','Orden: #'+idOrder[i]]]
 
-         //const arr:any[] =[[['xd','xd','xd','xd']],[['xd','xd','xd','xd']]];
-         const arr:any[] =[];
-        //console.log(Object.values(data[i]));
-        //console.log(arr);
-        //  autoTable(doc, {
-        //      head: head,
-        //      body:[data[i]],
-        //      didDrawCell: (data) => { },
-        //  });
+        const arr:any[] =[];
 
         for (const j in data[i]) {
             arr.push(Object.values(data[i][j]));
         }
+        
           autoTable(doc, {
               head: head,
               body:arr,
-              didDrawCell: (data) => { },
+              didDrawCell: (data) => { 
+                
+              },              
           });
       }
-      
 
+      
 
       doc.save("ordenes_generadas.pdf");
       
-
     }
   }
 
