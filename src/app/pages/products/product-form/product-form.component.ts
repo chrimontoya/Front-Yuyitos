@@ -104,13 +104,13 @@ export class ProductFormComponent implements OnInit {
               supplier: this.order.supplier
             } as OrderModel;
             this.orderService.add(order).subscribe({next:()=>{
-              this.dialog.open(DialogMessageSuccessComponent)
+              
             },
           error:()=>this.dialog.open(DialogMessageFailureComponent)})
           },
         error:()=>this.dialog.open(DialogMessageFailureComponent)})
         }
-      }})
+        this.dialog.open(DialogMessageSuccessComponent)}})
     }
   }
 
@@ -121,7 +121,6 @@ export class ProductFormComponent implements OnInit {
     }else{
       this.productArr=this.productArr.filter((product)=>product.id!==details.product.id);
     }
-    console.log(this.productArr);
   }
 
 

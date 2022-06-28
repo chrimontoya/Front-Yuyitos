@@ -138,10 +138,8 @@ export class OrderFormComponent implements OnInit {
               }
             } as OrderDetailsModel;
 
-            console.log(orderDetails);
             this.orderDetailsService.add(orderDetails).subscribe({
               next: () => {
-                console.log("funciona mierda");
               }
             })
           }
