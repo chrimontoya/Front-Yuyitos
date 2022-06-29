@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { DialogMessageFailureComponent } from 'src/app/components/dialogs/dialog-message-failure/dialog-message-failure.component';
+import { DialogMessageSuccessComponent } from 'src/app/components/dialogs/dialog-message-success/dialog-message-success.component';
 import { ClientModel } from 'src/app/models/client.interfaces';
 import { ProductModel } from 'src/app/models/product.interfaces';
 import { SaleAndDetailsModel } from 'src/app/models/sale-and-details.interfaces';
@@ -30,7 +32,8 @@ export class SaleFormComponent implements OnInit {
     private productService: ProductService,
     private clientService: ClientService,
     private saleService: SaleService,
-    private saleDetailsService: SaleDetailsService
+    private saleDetailsService: SaleDetailsService,
+    private dialog:MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +47,6 @@ export class SaleFormComponent implements OnInit {
         })
       ])
     });
-    console.log(this.saleAndDetail);
   }
 
   getAllProducts() {
@@ -124,13 +126,13 @@ export class SaleFormComponent implements OnInit {
               } as SaleDetailsModel;
 
               this.saleDetailsService.add(saleDetails).subscribe({
-                next: () => { console.log("ok"); }
+                next: () => { }
               })
             }
           }
         })
-      }
-    })
+      this.dialog.open(DialogMessageSuccessComponent)}
+    ,error:()=>this.dialog.open(DialogMessageFailureComponent)})
   }
 
 }

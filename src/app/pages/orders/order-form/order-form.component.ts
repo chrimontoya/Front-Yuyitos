@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { DialogMessageFailureComponent } from 'src/app/components/dialogs/dialog-message-failure/dialog-message-failure.component';
+import { DialogMessageSuccessComponent } from 'src/app/components/dialogs/dialog-message-success/dialog-message-success.component';
 import { ContactModel } from 'src/app/models/contact.interfaces';
 import { OrderModel } from 'src/app/models/order.interfaces';
 import { OrderDetailsModel } from 'src/app/models/orderDetails.interfaces';
@@ -35,7 +37,8 @@ export class OrderFormComponent implements OnInit {
     private supplierService: SupplierService,
     private contactService: ContactService,
     private orderService: OrderService,
-    private orderDetailsService: OrderDetailsService
+    private orderDetailsService: OrderDetailsService,
+    private dialog:MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -112,14 +115,12 @@ export class OrderFormComponent implements OnInit {
     //   for (const key in this.product.value) {
     //validar    console.log(this.product.value[key].name?true:false);
     // }
-    if(this.ordenDetails)console.log("primero",this.ordenDetails.dateExpiration);
     const order = {
       id: this.ordenDetails?this.ordenDetails.order.id:null,
       dateCreate: new Date(),
       status: 0,
       supplier: this.ordenDetails?{id: this.ordenDetails.order.supplier.id}:this.supplierDetails
     } as unknown as OrderModel;
-    console.log(order);
     this.orderService.add(order).subscribe({
       next: (idOrder) => {
         if (idOrder) {
@@ -144,8 +145,8 @@ export class OrderFormComponent implements OnInit {
             })
           }
         }
-      }
-    })
+      this.dialog.open(DialogMessageSuccessComponent)}
+    ,error:()=>this.dialog.open(DialogMessageFailureComponent)})
   }
 
   //   saveSupplier() {
